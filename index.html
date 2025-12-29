@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello</title>
+  <style>
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:#fff;
+      color:#111;
+    }
+    .wrap{
+      max-width:520px;
+      padding:48px 20px;
+      margin:0 auto;
+    }
+    h1{
+      font-size:42px;
+      margin-bottom:32px;
+    }
+    p{
+      font-size:18px;
+      line-height:1.5;
+      margin:12px 0;
+    }
+    .btn{
+      display:inline-block;
+      margin-top:28px;
+      padding:14px 22px;
+      border-radius:14px;
+      border:1px solid #111;
+      text-decoration:none;
+      font-weight:600;
+      color:#111;
+    }
+    .lang{
+      display:none;
+    }
+    .lang.active{
+      display:block;
+    }
+    .switch{
+      position:fixed;
+      top:16px;
+      right:16px;
+      border:1px solid #ccc;
+      border-radius:999px;
+      padding:6px 12px;
+      background:#fff;
+      font-weight:600;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+
+<button class="switch" onclick="toggleLang()">IT</button>
+
+<div class="wrap">
+
+  <h1>Ciao.</h1>
+
+  <div id="en" class="lang active">
+    <p>Ok, you scanned a t-shirt.</p>
+    <p>This is just a simple way to say hello.<br>
+    If you want, you know where to find me.</p>
+
+    <a class="btn" href="https://instagram.com/marco__mammi">Open Instagram →</a>
+    <p style="opacity:.6;margin-top:12px;">or search for @marco__mammi</p>
+
+    <p style="opacity:.4;margin-top:40px;">That’s it.</p>
+  </div>
+
+  <div id="it" class="lang">
+    <p>Ok, hai scansionato una maglia.</p>
+    <p>È solo un modo semplice per dire ciao.<br>
+    Se ti va, sai dove trovarmi.</p>
+
+    <a class="btn" href="https://instagram.com/marco__mammi">Apri Instagram →</a>
+    <p style="opacity:.6;margin-top:12px;">oppure cerca @marco__mammi</p>
+
+    <p style="opacity:.4;margin-top:40px;">Tutto qui.</p>
+  </div>
+
+</div>
+
+<script>
+  let current = 'en';
+  function toggleLang(){
+    document.getElementById(current).classList.remove('active');
+    current = current === 'en' ? 'it' : 'en';
+    document.getElementById(current).classList.add('active');
+    document.querySelector('.switch').innerText = current === 'en' ? 'IT' : 'EN';
+  }
+</script>
+
+</body>
+</html>
