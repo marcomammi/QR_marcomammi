@@ -2,283 +2,246 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b0c10" />
-  <title>Ciao — Marco</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Ciao.</title>
 
-  <!-- Social preview (optional, but nice) -->
-  <meta property="og:title" content="Ciao — Marco" />
-  <meta property="og:description" content="A simple way to say hello." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://marcomammi.github.io/QR_marcomammi/" />
+  <!-- Optional: nicer font, safe fallback if it doesn't load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg1:#0b0c10;
-      --bg2:#0f1220;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.08);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.68);
-      --hair: rgba(255,255,255,.14);
-      --accent: rgba(255,255,255,.92);
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --radius: 22px;
+      --bg1:#f6f7fb;
+      --bg2:#eef1f7;
+      --card:#ffffffcc;
+      --stroke:rgba(0,0,0,.08);
+      --text:#0b0b0c;
+      --muted:rgba(11,11,12,.62);
+      --muted2:rgba(11,11,12,.45);
+      --shadow: 0 20px 50px rgba(0,0,0,.10);
+      --radius: 24px;
+      --btn:#0b0b0c;
+      --btnText:#fff;
+      --focus: rgba(0,0,0,.18);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg1:#0b0c10;
+        --bg2:#12131a;
+        --card:rgba(255,255,255,.06);
+        --stroke:rgba(255,255,255,.10);
+        --text:#ffffff;
+        --muted:rgba(255,255,255,.72);
+        --muted2:rgba(255,255,255,.50);
+        --shadow: 0 24px 60px rgba(0,0,0,.55);
+        --btn:#ffffff;
+        --btnText:#0b0b0c;
+        --focus: rgba(255,255,255,.24);
+      }
+    }
+
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--text);
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      padding:28px 18px;
+      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       background:
-        radial-gradient(900px 500px at 20% 10%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(1000px 700px at 10% 10%, var(--bg1) 0%, transparent 55%),
+        radial-gradient(900px 650px at 90% 30%, var(--bg2) 0%, transparent 58%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-      overflow-x:hidden;
-    }
-
-    /* subtle grain */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-      opacity:.25;
     }
 
     .wrap{
-      min-height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 22px 18px;
-    }
-
-    .card{
-      width: min(560px, 100%);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, var(--card), var(--card2));
-      border: 1px solid var(--hair);
-      box-shadow: var(--shadow);
-      padding: 26px 22px 22px;
+      width:min(520px, 100%);
       position:relative;
-      backdrop-filter: blur(10px);
     }
 
-    .topbar{
+    /* Language toggle (top-right, minimal) */
+    .langbar{
       display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom: 18px;
+      justify-content:flex-end;
+      margin-bottom:12px;
     }
-
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--hair);
-      background: rgba(0,0,0,.18);
-    }
-
-    .dot{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(255,255,255,.75);
-      box-shadow: 0 0 0 4px rgba(255,255,255,.08);
-    }
-
-    .chip span{
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: .02em;
-    }
-
     .toggle{
       display:inline-flex;
-      border: 1px solid var(--hair);
-      border-radius: 999px;
-      overflow:hidden;
-      background: rgba(0,0,0,.18);
+      gap:6px;
+      padding:6px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(255,255,255,.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-
+    @media (prefers-color-scheme: dark){
+      .toggle{ background: rgba(255,255,255,.04); }
+    }
     .toggle button{
-      appearance:none;
       border:0;
       background:transparent;
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 12px;
-      padding: 8px 12px;
+      color:var(--muted);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:12px;
+      letter-spacing:.08em;
       cursor:pointer;
-      letter-spacing:.06em;
+      transition: background .15s ease, color .15s ease;
     }
     .toggle button.active{
-      color: rgba(0,0,0,.88);
-      background: rgba(255,255,255,.92);
+      background:rgba(0,0,0,.08);
+      color:var(--text);
+    }
+    @media (prefers-color-scheme: dark){
+      .toggle button.active{ background: rgba(255,255,255,.14); }
+    }
+    .toggle button:focus-visible{
+      outline:3px solid var(--focus);
+      outline-offset:3px;
+    }
+
+    /* Card */
+    .card{
+      border:1px solid var(--stroke);
+      background:var(--card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:28px 26px 26px;
     }
 
     h1{
-      margin: 4px 0 12px;
-      font-size: 54px;
-      line-height: .95;
-      letter-spacing: -0.04em;
+      margin:0;
+      font-size:54px;
+      line-height:1;
+      letter-spacing:-0.04em;
     }
 
-    .lead{
-      margin: 0 0 14px;
-      font-size: 18px;
-      line-height: 1.55;
-      color: rgba(255,255,255,.82);
+    .copy{
+      margin-top:16px;
+      font-size:18px;
+      line-height:1.55;
+      color:var(--muted);
+      letter-spacing:-0.01em;
     }
+
+    .copy strong{ color:var(--text); font-weight:650; }
 
     .cta{
-      margin-top: 18px;
+      margin-top:22px;
       display:flex;
       flex-direction:column;
-      gap: 10px;
+      gap:12px;
     }
 
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:space-between;
-      gap: 14px;
-      padding: 14px 16px;
-      border-radius: 16px;
+      gap:14px;
+      width:100%;
+      padding:16px 18px;
+      border-radius:16px;
       text-decoration:none;
-      color: rgba(0,0,0,.9);
-      background: rgba(255,255,255,.92);
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow: 0 12px 30px rgba(0,0,0,.28);
-      transform: translateY(0);
-      transition: transform .14s ease, box-shadow .14s ease;
+      background:var(--btn);
+      color:var(--btnText);
+      font-weight:700;
+      font-size:16px;
+      letter-spacing:-0.01em;
+      border:1px solid rgba(0,0,0,.06);
+      transition: transform .12s ease, filter .12s ease;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.34);
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .btn:active{ transform: translateY(0); }
+    .btn:focus-visible{
+      outline:3px solid var(--focus);
+      outline-offset:4px;
     }
-    .btn:active{
-      transform: translateY(0px);
-      box-shadow: 0 12px 30px rgba(0,0,0,.28);
-    }
-
     .btn .arrow{
-      font-weight: 900;
-      opacity:.75;
+      font-size:18px;
+      opacity:.9;
     }
 
-    .micro{
+    .hint{
+      font-size:14px;
+      color:var(--muted2);
       margin:0;
-      font-size: 13px;
-      color: var(--muted);
     }
-    .micro strong{ color: rgba(255,255,255,.86); font-weight: 800; }
-
-    .sep{
-      margin: 18px 0 12px;
-      height:1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
-      border:0;
+    .handle{
+      font-weight:700;
+      color:var(--text);
     }
 
-    .fine{
-      margin:0;
-      font-size: 12px;
-      color: rgba(255,255,255,.46);
+    .foot{
+      margin-top:18px;
+      padding-top:16px;
+      border-top:1px solid var(--stroke);
+      font-size:13px;
+      color:var(--muted2);
     }
 
-    /* language blocks */
+    /* Language blocks */
     .lang{ display:none; }
     .lang.active{ display:block; }
 
-    /* small screens */
-    @media (max-width: 420px){
-      h1{ font-size: 46px; }
-      .card{ padding: 24px 18px 20px; }
-    }
-
-    /* optional: light mode if someone forces it */
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg1:#f5f6f7;
-        --bg2:#eef0f3;
-        --card: rgba(255,255,255,.72);
-        --card2: rgba(255,255,255,.86);
-        --text: rgba(0,0,0,.90);
-        --muted: rgba(0,0,0,.58);
-        --hair: rgba(0,0,0,.10);
-        --shadow: 0 18px 45px rgba(0,0,0,.10);
-      }
-      .chip, .toggle{ background: rgba(255,255,255,.65); }
-      .btn{ background: rgba(0,0,0,.92); color: rgba(255,255,255,.92); }
-      .btn .arrow{ opacity:.85; }
-      .lead{ color: rgba(0,0,0,.72); }
-      .micro strong{ color: rgba(0,0,0,.78); }
-      body::before{ opacity:.12; }
+    /* Make it feel centered on tall screens */
+    @media (min-height: 760px){
+      body{ padding-top:40px; padding-bottom:40px; }
     }
   </style>
 </head>
 
 <body>
   <main class="wrap">
-    <section class="card" aria-label="Hello">
-      <div class="topbar">
-        <div class="chip" aria-label="Status">
-          <span class="dot" aria-hidden="true"></span>
-          <span>QR page</span>
-        </div>
-
-        <div class="toggle" role="tablist" aria-label="Language">
-          <button id="btnEN" class="active" type="button" aria-selected="true">EN</button>
-          <button id="btnIT" type="button" aria-selected="false">IT</button>
-        </div>
+    <div class="langbar" aria-label="Language selector">
+      <div class="toggle" role="tablist" aria-label="Language">
+        <button id="btnEN" class="active" type="button" role="tab" aria-selected="true">EN</button>
+        <button id="btnIT" type="button" role="tab" aria-selected="false">IT</button>
       </div>
+    </div>
 
+    <section class="card" aria-label="Content">
       <h1>Ciao.</h1>
 
-      <!-- ENGLISH (default) -->
+      <!-- EN (default) -->
       <div class="lang lang-en active">
-        <p class="lead">
+        <p class="copy">
           Ok, you scanned a t-shirt.<br>
-          Just a simple way to say hello.
+          A simple way to say hello.
         </p>
 
         <div class="cta">
           <a class="btn" href="https://instagram.com/marco__mammi" target="_blank" rel="noopener">
-            Open Instagram <span class="arrow">→</span>
+            Open Instagram <span class="arrow" aria-hidden="true">→</span>
           </a>
-          <p class="micro">or search for <strong>@marco__mammi</strong></p>
+          <p class="hint">or search for <span class="handle">@marco__mammi</span></p>
         </div>
 
-        <hr class="sep" />
-        <p class="fine">That’s it.</p>
+        <div class="foot">That’s it.</div>
       </div>
 
-      <!-- ITALIAN -->
+      <!-- IT -->
       <div class="lang lang-it">
-        <p class="lead">
+        <p class="copy">
           Ok, hai scansionato una maglia.<br>
-          Solo un modo semplice per dire ciao.
+          Un modo semplice per dire ciao.
         </p>
 
         <div class="cta">
           <a class="btn" href="https://instagram.com/marco__mammi" target="_blank" rel="noopener">
-            Apri Instagram <span class="arrow">→</span>
+            Apri Instagram <span class="arrow" aria-hidden="true">→</span>
           </a>
-          <p class="micro">oppure cerca <strong>@marco__mammi</strong></p>
+          <p class="hint">oppure cerca <span class="handle">@marco__mammi</span></p>
         </div>
 
-        <hr class="sep" />
-        <p class="fine">Tutto qui.</p>
+        <div class="foot">Tutto qui.</div>
       </div>
     </section>
   </main>
@@ -290,28 +253,21 @@
     const it = document.querySelector('.lang-it');
 
     function setLang(lang){
-      const isEN = lang === 'en';
+      const isEN = (lang === 'en');
       en.classList.toggle('active', isEN);
       it.classList.toggle('active', !isEN);
 
       btnEN.classList.toggle('active', isEN);
       btnIT.classList.toggle('active', !isEN);
 
-      btnEN.setAttribute('aria-selected', String(isEN));
-      btnIT.setAttribute('aria-selected', String(!isEN));
+      btnEN.setAttribute('aria-selected', isEN ? 'true' : 'false');
+      btnIT.setAttribute('aria-selected', !isEN ? 'true' : 'false');
 
       document.documentElement.lang = isEN ? 'en' : 'it';
-      try { localStorage.setItem('qr_lang', isEN ? 'en' : 'it'); } catch(e){}
     }
 
     btnEN.addEventListener('click', () => setLang('en'));
     btnIT.addEventListener('click', () => setLang('it'));
-
-    // Persist choice
-    try{
-      const saved = localStorage.getItem('qr_lang');
-      if(saved === 'it') setLang('it');
-    } catch(e){}
   </script>
 </body>
 </html>
